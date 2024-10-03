@@ -25,4 +25,4 @@ for release in releases:
     )
     # download_link = "https://github.com" + download_link_element.get("href")
 
-    print(download_link_element)
+    print(download_link_element)  # xyu
