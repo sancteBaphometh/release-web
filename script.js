@@ -29,17 +29,20 @@ function populateTable(releases) {
         const row = document.createElement('tr');
 
         // Создаем ячейки для каждой колонки
-        const nameCell = document.createElement('td');
-        nameCell.textContent = release.name;
-        row.appendChild(nameCell);
+        const labelCell = document.createElement('td');
+        labelCell.textContent = release.label;
+        row.appendChild(labelCell);
 
         const versionCell = document.createElement('td');
         versionCell.textContent = release.version;
         row.appendChild(versionCell);
 
+        const descriptionCell = document.createElement('td');
+        descriptionCell.textContent = release.description;
+        row.appendChild(descriptionCell);
+
         const downloadCell = document.createElement('td');
         const link = document.createElement('a');
-        link.href = release.download_url.replace(/FORBIDDEN/g, ':');  // Исправляем ссылку
         link.textContent = "Download";
         downloadCell.appendChild(link);
         row.appendChild(downloadCell);

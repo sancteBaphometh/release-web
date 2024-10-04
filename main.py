@@ -20,39 +20,38 @@ app.add_middleware(
 
 
 class Release(BaseModel):
-    name: str
+    label: str
     version: str
+    description: str
     download_url: str
 
 
-# Получаем HTML-страницу профиля пользователя
-# url = "https://github.com/ValdikSS/GoodbyeDPI/releases"
-url = "https://github.com/sancteBaphometh"
+# Получаем HTML-страницу релизов
+url = "https://github.com/sancteBaphometh/release-web/releases"
 response = requests.get(url)
 
 # Парсим HTML-страницу
 soup = BeautifulSoup(response.text, "html.parser")
 
 # Извлекаем список релизов
-repositories = soup.find_all("li", class_="repo-list-item")
+raw_releases = soup.find_all("div", class_="Box-body")
 
-# Печатаем имена релизов
-for repository in repositories:
-    print(repository)  # .find("a").text)
+releases = []
 
+for release in raw_releases:
+    label = release.find("span", class_="Label Label--success Label--large").text
+    version = release.find("a", class_="Link--primary Link").text
+    link = "https://github.com" + release.find("a").get("href")
+    text = release.find("div", class_="markdown-body my-3").text
+    text = text.split("~")
+    description = text[0]
+    download = text[1]
 
-releases = [
-    {
-        "name": "My Android App",
-        "version": "1.0.0",
-        "download_url": "z",
-    },
-    {
-        "name": "My Android App",
-        "version": "1.1.0",
-        "download_url": "o",
-    },
-]
+    releases.append(
+        Release(
+            label=label, version=version, description=description, download_url=download
+        )
+    )
 
 
 @app.get("/releases")
