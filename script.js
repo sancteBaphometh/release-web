@@ -41,10 +41,17 @@ function populateTable(releases) {
         descriptionCell.textContent = release.description;
         row.appendChild(descriptionCell);
 
+        // Создаем кнопку "Download"
         const downloadCell = document.createElement('td');
-        const link = document.createElement('a');
-        link.textContent = "Download";
-        downloadCell.appendChild(link);
+        const button = document.createElement('button');
+        button.textContent = "Скачать APK";
+
+        // Устанавливаем ссылку на кнопке
+        button.addEventListener('click', () => {
+            window.location.href = release.download_url;
+        });
+
+        downloadCell.appendChild(button);
         row.appendChild(downloadCell);
 
         // Добавляем строку в тело таблицы

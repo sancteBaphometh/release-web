@@ -39,13 +39,19 @@ raw_releases = soup.find_all("div", class_="Box-body")
 releases = []
 
 for release in raw_releases:
-    label = release.find("span", class_="Label Label--success Label--large").text
+    label = release.find(
+        "span", class_="Label Label--success Label--large"
+    ).text.lower()
     version = release.find("a", class_="Link--primary Link").text
     link = "https://github.com" + release.find("a").get("href")
     text = release.find("div", class_="markdown-body my-3").text
     text = text.split("~")
     description = text[0]
     download = text[1]
+
+    # Обработка label
+    if label == "latest":
+        label = "НОВАЯ ВЕРСИЯ!"
 
     releases.append(
         Release(
